@@ -1,22 +1,37 @@
 package solutions
 
+import java.util.*
+
 object Day01 : Solution() {
     override val identifier = this::class.simpleName.toString()
 
     override fun solvePart1(input: String): String {
         val splitInput: List<String> = input.split("\n")
-        var initialFrequency = 0
+        var frequency = 0
 
         for (line: String in splitInput) {
             val operation = parseArithmeticOperation(line)
-            initialFrequency += operation
+            frequency += operation
         }
 
-        return initialFrequency.toString()
+        return frequency.toString()
     }
 
     override fun solvePart2(input: String): String {
-        return "Not implemented yet"
+        val splitInput: List<String> = input.split("\n")
+        val repeatedInput: List<String> = Collections.nCopies(100000, splitInput).flatten()
+        var frequency = 0
+        val seenFrequencies: MutableSet<Int> = mutableSetOf(frequency)
+
+        for (line: String in repeatedInput) {
+            val operation = parseArithmeticOperation(line)
+            frequency += operation
+
+            if (seenFrequencies.contains(frequency)) return frequency.toString()
+            seenFrequencies.add(frequency)
+        }
+
+        throw NoSuchElementException("Could not find any frequency pattern")
     }
 
     fun parseArithmeticOperation(operation: String): Int {
