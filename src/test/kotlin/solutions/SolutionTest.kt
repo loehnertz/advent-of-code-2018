@@ -1,9 +1,9 @@
 package solutions
 
-import org.testng.Assert.assertEquals
-import org.testng.annotations.Test
+import org.junit.Test
 import java.io.File
 import java.nio.file.Paths
+import kotlin.test.assertEquals
 
 class SolutionTest {
     @Test
@@ -14,7 +14,11 @@ class SolutionTest {
         val solutionImplementation = object : Solution() {
             override val identifier = testFileName
 
-            override fun solve(): String {
+            override fun solvePartOne(): String {
+                return retrieveInput()
+            }
+
+            override fun solvePartTwo(): String {
                 return retrieveInput()
             }
         }
@@ -23,7 +27,7 @@ class SolutionTest {
         val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
         File("$inputDirectoryPath/$testFileName.txt").writeText(testFileContent)
 
-        assertEquals("Just a test!", solutionImplementation.solve())
+        assertEquals("Just a test!", solutionImplementation.solvePartOne())
 
         // Delete temporary test file
         File("$inputDirectoryPath/$testFileName.txt").delete()
