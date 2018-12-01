@@ -15,14 +15,14 @@ abstract class Solution {
     abstract fun solvePart2(input: String): String
 
     fun solve() {
-        println("Solution for part 1: " + solvePart1(retrieveInput(1)))
-        println("Solution for part 2: " + solvePart2(retrieveInput(2)))
+        println("Solution for part 1: " + solvePart1(retrieveInput()))
+        println("Solution for part 2: " + solvePart2(retrieveInput()))
     }
 
-    fun retrieveInput(part: Int): String {
+    fun retrieveInput(): String {
         val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
         return try {
-            val inputStream: InputStream = File("$inputDirectoryPath/$identifier-$part.txt").inputStream()
+            val inputStream: InputStream = File("$inputDirectoryPath/$identifier.txt").inputStream()
             inputStream.bufferedReader().use { it.readText() }
         } catch (e: FileNotFoundException) {
             ""

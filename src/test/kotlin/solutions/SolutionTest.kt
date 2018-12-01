@@ -8,7 +8,6 @@ import kotlin.test.assertEquals
 class SolutionTest {
     @Test
     fun `the content of an input file can be correctly retrieved`() {
-        val partNumber = 1
         val testFileName = "Day00"
         val testFileContent = "Just a test!"
 
@@ -26,11 +25,11 @@ class SolutionTest {
 
         // Create temporary test file
         val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
-        File("$inputDirectoryPath/$testFileName-$partNumber.txt").writeText(testFileContent)
+        File("$inputDirectoryPath/$testFileName.txt").writeText(testFileContent)
 
-        assertEquals(testFileContent, solutionImplementation.retrieveInput(partNumber))
+        assertEquals(testFileContent, solutionImplementation.retrieveInput())
 
         // Delete temporary test file
-        File("$inputDirectoryPath/$testFileName-$partNumber.txt").delete()
+        File("$inputDirectoryPath/$testFileName.txt").delete()
     }
 }
