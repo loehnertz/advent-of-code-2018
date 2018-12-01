@@ -9,7 +9,9 @@ const val relativeInputDirectoryPath = "src/main/resources/inputs"
 abstract class Solution {
     abstract val identifier: String
 
-    abstract fun solve(): String
+    abstract fun solvePartOne(): String
+
+    abstract fun solvePartTwo(): String
 
     fun retrieveInput(): String {
         val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
