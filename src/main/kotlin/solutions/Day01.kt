@@ -1,7 +1,5 @@
 package solutions
 
-import java.util.*
-
 object Day01 : Solution() {
     override val identifier = this::class.simpleName.toString()
 
@@ -19,11 +17,10 @@ object Day01 : Solution() {
 
     override fun solvePart2(input: String): String {
         val splitInput: List<String> = input.split("\n")
-        val repeatedInput: List<String> = Collections.nCopies(100000, splitInput).flatten()
         var frequency = 0
         val seenFrequencies: MutableSet<Int> = mutableSetOf(frequency)
 
-        for (line: String in repeatedInput) {
+        for (line: String in generateSequence { splitInput }.flatten()) {
             val operation = parseArithmeticOperation(line)
             frequency += operation
 
