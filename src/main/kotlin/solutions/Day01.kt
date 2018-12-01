@@ -16,7 +16,7 @@ object Day01 : Solution() {
     }
 
     override fun solvePart2(input: String): String {
-        return "Not implemented yet!"
+        return "Not implemented yet"
     }
 
     fun parseArithmeticOperation(operation: String): Int {
