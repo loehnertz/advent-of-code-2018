@@ -4,9 +4,9 @@ import java.io.File
 import java.io.InputStream
 import java.nio.file.Paths
 
-abstract class Solution {
-    private val relativeInputDirectoryPath = "src/main/resources/inputs"
+const val relativeInputDirectoryPath = "src/main/resources/inputs"
 
+abstract class Solution {
     abstract val identifier: String
 
     abstract fun solve(): String
