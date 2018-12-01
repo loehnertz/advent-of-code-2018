@@ -13,14 +13,14 @@ class Day01Test {
     }
 
     @Test
-    fun `valid input of part 1 that does not to be repeated gets solved correctly`() {
+    fun `valid input of part 2 that does not to be repeated gets solved correctly`() {
         val input = "+1\n-10\n+21\n+5\n+6\n-23"
         val correctOutput = "0"
         assertEquals(correctOutput, Day01.solvePart2(input))
     }
 
     @Test
-    fun `valid input of part 1 that needs to be repeated gets solved correctly`() {
+    fun `valid input of part 2 that needs to be repeated gets solved correctly`() {
         val input = "+1\n-10\n+21\n+5\n+6\n-21"
         val correctOutput = "23"
         assertEquals(correctOutput, Day01.solvePart2(input))
