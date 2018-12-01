@@ -8,28 +8,29 @@ import kotlin.test.assertEquals
 class SolutionTest {
     @Test
     fun `the content of an input file can be correctly retrieved`() {
+        val partNumber = 1
+        val testFileName = "Day00"
         val testFileContent = "Just a test!"
-        val testFileName = "DayTest"
 
         val solutionImplementation = object : Solution() {
             override val identifier = testFileName
 
-            override fun solvePartOne(): String {
-                return retrieveInput()
+            override fun solvePart1(input: String): String {
+                return input
             }
 
-            override fun solvePartTwo(): String {
-                return retrieveInput()
+            override fun solvePart2(input: String): String {
+                return input
             }
         }
 
         // Create temporary test file
         val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
-        File("$inputDirectoryPath/$testFileName.txt").writeText(testFileContent)
+        File("$inputDirectoryPath/$testFileName-$partNumber.txt").writeText(testFileContent)
 
-        assertEquals("Just a test!", solutionImplementation.solvePartOne())
+        assertEquals(testFileContent, solutionImplementation.retrieveInput(partNumber))
 
         // Delete temporary test file
-        File("$inputDirectoryPath/$testFileName.txt").delete()
+        File("$inputDirectoryPath/$testFileName-$partNumber.txt").delete()
     }
 }
