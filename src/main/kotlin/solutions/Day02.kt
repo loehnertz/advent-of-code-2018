@@ -24,7 +24,41 @@ object Day02 : Solution() {
     }
 
     override fun solvePart2(input: String): String {
-        TODO("Not implemented yet.")
+        val lines: List<String> = splitMultilineInput(input)
+
+        for (line: String in lines) {
+            for (lineToCompareTo: String in lines) {
+                if (line != lineToCompareTo && lineOnlyDiffersByOneCharacter(line, lineToCompareTo)) {
+                    return removeDifferingLetter(line, lineToCompareTo)
+                }
+            }
+        }
+
+        throw NoSuchElementException("No two ID's were found that only differ by one letter.")
+    }
+
+    fun removeDifferingLetter(first: String, second: String): String {
+        val firstSplit = first.split("")
+        val secondSplit = second.split("")
+        val uniqueLetterString: ArrayList<String> = ArrayList()
+
+        for (i in 0..(firstSplit.size - 1)) {
+            if (firstSplit[i] == secondSplit[i]) uniqueLetterString.add(firstSplit[i])
+        }
+
+        return uniqueLetterString.joinToString("")
+    }
+
+    fun lineOnlyDiffersByOneCharacter(line: String, lineToCompareTo: String): Boolean {
+        val firstSplit: List<String> = line.split("")
+        val secondSplit: List<String> = lineToCompareTo.split("")
+        var differingLetters = 0
+
+        for (i in 0..(firstSplit.size - 1)) {
+            if (firstSplit[i] != secondSplit[i]) differingLetters++
+        }
+
+        return differingLetters <= 1
     }
 
     private fun calculateChecksum(): Int {
