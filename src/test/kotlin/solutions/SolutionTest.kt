@@ -24,12 +24,12 @@ class SolutionTest {
         }
 
         // Create temporary test file
-        val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
-        File("$inputDirectoryPath/$testFileName.txt").writeText(testFileContent)
+        val inputDirectoryPath = Paths.get("").resolve(RelativeInputDirectoryPath).toAbsolutePath().toString()
+        File("$inputDirectoryPath/$testFileName.$FileExtension").writeText(testFileContent)
 
         assertEquals(testFileContent, solutionImplementation.retrieveInput())
 
         // Delete temporary test file
-        File("$inputDirectoryPath/$testFileName.txt").delete()
+        File("$inputDirectoryPath/$testFileName.$FileExtension").delete()
     }
 }

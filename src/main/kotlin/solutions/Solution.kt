@@ -5,7 +5,8 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.nio.file.Paths
 
-const val relativeInputDirectoryPath = "src/main/resources/inputs"
+const val RelativeInputDirectoryPath = "src/main/resources/inputs"
+const val FileExtension = "txt"
 
 abstract class Solution {
     abstract val identifier: String
@@ -20,9 +21,9 @@ abstract class Solution {
     }
 
     fun retrieveInput(): String {
-        val inputDirectoryPath = Paths.get("").resolve(relativeInputDirectoryPath).toAbsolutePath().toString()
+        val inputDirectoryPath = Paths.get("").resolve(RelativeInputDirectoryPath).toAbsolutePath().toString()
         return try {
-            val inputStream: InputStream = File("$inputDirectoryPath/$identifier.txt").inputStream()
+            val inputStream: InputStream = File("$inputDirectoryPath/$identifier.$FileExtension").inputStream()
             inputStream.bufferedReader().use { it.readText() }
         } catch (e: FileNotFoundException) {
             ""
