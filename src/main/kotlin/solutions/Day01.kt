@@ -4,10 +4,10 @@ object Day01 : Solution() {
     override val identifier = this::class.simpleName.toString()
 
     override fun solvePart1(input: String): String {
-        val splitInput: List<String> = input.split("\n")
+        val lines: List<String> = splitMultilineInput(input)
         var frequency = 0
 
-        for (line: String in splitInput) {
+        for (line: String in lines) {
             val operation = parseArithmeticOperation(line)
             frequency += operation
         }
@@ -16,11 +16,11 @@ object Day01 : Solution() {
     }
 
     override fun solvePart2(input: String): String {
-        val splitInput: List<String> = input.split("\n")
+        val lines: List<String> = splitMultilineInput(input)
         var frequency = 0
         val seenFrequencies: MutableSet<Int> = mutableSetOf(frequency)
 
-        for (line: String in generateSequence { splitInput }.flatten()) {
+        for (line: String in generateSequence { lines }.flatten()) {
             val operation = parseArithmeticOperation(line)
             frequency += operation
 
