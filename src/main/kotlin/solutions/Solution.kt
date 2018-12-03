@@ -29,4 +29,8 @@ abstract class Solution {
             ""
         }
     }
+
+    fun splitMultilineInput(multiline: String): List<String> {
+        return multiline.split("\n")
+    }
 }
