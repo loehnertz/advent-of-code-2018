@@ -21,9 +21,10 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
 ## Puzzles
-| Day                        	| Part 1 	| Part 2 	|
-|----------------------------	|--------	|--------	|
-| Day 1: Chronal Calibration 	| ⭐      	| ⭐      	|
+| Day                        	        | Part 1 	| Part 2 	|
+|----------------------------	        |--------	|--------	|
+| Day 1: Chronal Calibration 	        | ⭐      	| ⭐      	|
+| Day 2: Inventory Management System 	| ⭐      	| ⭐      	|
 
 ## Tests
 I additionally write tests for every day's puzzle. You can execute them with JUnit.
