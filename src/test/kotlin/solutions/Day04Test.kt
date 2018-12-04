@@ -61,7 +61,7 @@ class Day04Test {
 
     @Test
     fun `record timestamps are parsed correctly`() {
-        val input = "[1518-11-01 00:21]"
+        val input = "1518-11-01 00:21"
         val correctOutput: LocalDateTime = LocalDateTime.parse("1518-11-01 00:21", dateFormatPattern)
 
         assertEquals(correctOutput, Day04.parseTimestamp(input))
