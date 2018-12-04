@@ -22,7 +22,15 @@ object Day04 : Solution() {
         TODO("Implement this!")
     }
 
-    fun parseRecordLines(recordLines: List<String>): ArrayList<GuardRecord> {
+    fun calculateGuardWithMostTimeAsleep(guardAsleepTimes: HashMap<Int, Array<Int>>): Pair<Int, Int> {
+        TODO("Implement this!")
+    }
+
+    fun orderRecordEntries(recordLines: List<String>): ArrayList<Pair<LocalDateTime, String>> {
+        TODO("not implemented")
+    }
+
+    fun parseRecordEntries(recordEntries: ArrayList<Pair<LocalDateTime, String>>): ArrayList<GuardRecord> {
         TODO("Implement this!")
     }
 
