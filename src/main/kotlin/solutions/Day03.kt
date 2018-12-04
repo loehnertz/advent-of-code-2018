@@ -54,12 +54,14 @@ object Day03 : Solution() {
     private fun findUniqueFabricIdSpace(size: Pair<Int, Int>, position: Pair<Int, Int>): Boolean {
         val desiredIdSquareInches = size.first * size.second
         var currentIdSquareInches = 0
+
         for (row in position.first..(position.first + size.first - 1)) {
             for (column in position.second..(position.second + size.second - 1)) {
                 if (fabricCounts[row][column] == 1) currentIdSquareInches++
                 if (currentIdSquareInches == desiredIdSquareInches) return true
             }
         }
+
         return false
     }
 }
