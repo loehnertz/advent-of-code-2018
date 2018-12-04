@@ -33,11 +33,11 @@ object Day03 : Solution() {
         var (id, _, position, size) = line.split(" ")
 
         position = position.replace(":", "")  // A colon is at the end of the positional information
-        val (topOffset, leftOffset) = position.split(",")
+        val (leftOffset, topOffset) = position.split(",")
 
         val (width, height) = size.split("x")
 
-        return Triple(id, Pair(topOffset.toInt(), leftOffset.toInt()), Pair(width.toInt(), height.toInt()))
+        return Triple(id, Pair(leftOffset.toInt(), topOffset.toInt()), Pair(width.toInt(), height.toInt()))
     }
 
     override fun solvePart2(input: String): String {
