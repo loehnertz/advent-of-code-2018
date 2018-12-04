@@ -37,17 +37,21 @@ class Day04Test {
 
     @Test
     fun `record timestamps are parsed correctly`() {
-        val input = "[1518-11-01 00:21] Guard #10 begins shift"
-        val correctOutput = LocalDateTime.parse("1518-11-01 00:21", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM"))
+        val input = "[1518-11-01 00:21]"
+        val correctOutput: LocalDateTime = LocalDateTime.parse(
+            "1518-11-01 00:21",
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        )
 
         assertEquals(correctOutput, Day04.parseTimestamp(input))
     }
 
     @Test
     fun `three subsequent record lines are parsed correctly`() {
-        val input = "[1518-11-01 00:00] Guard #10 begins shift\n" +
+        val rawInput: String = "[1518-11-01 00:00] Guard #10 begins shift\n" +
                 "[1518-11-01 00:05] falls asleep\n" +
                 "[1518-11-01 00:25] wakes up"
+        val input: List<String> = rawInput.split("\n")
         val correctOutput: ArrayList<GuardRecord> = arrayListOf(
             GuardRecord(
                 timestamp = Day04.parseTimestamp("[1518-11-01 00:00]"),
