@@ -11,7 +11,7 @@ object Day03 : Solution() {
 
         for (line in lines) {
             val (_: String, position: Pair<Int, Int>, size: Pair<Int, Int>) = parseLine(line)
-            checkFabricOverlapAndUpdateCounts(position, size)
+            updateFabricPositions(position, size)
         }
 
         for (row: IntArray in fabricCounts) {
@@ -21,7 +21,7 @@ object Day03 : Solution() {
         return claimedSquareInches.toString()
     }
 
-    private fun checkFabricOverlapAndUpdateCounts(position: Pair<Int, Int>, size: Pair<Int, Int>) {
+    private fun updateFabricPositions(position: Pair<Int, Int>, size: Pair<Int, Int>) {
         for (row in position.first..(position.first + size.first - 1)) {
             for (column in position.second..(position.second + size.second - 1)) {
                 fabricCounts[row][column] += 1
@@ -41,7 +41,26 @@ object Day03 : Solution() {
     }
 
     override fun solvePart2(input: String): String {
-        TODO("Not implemented yet.")
+        val lines: List<String> = splitMultilineInput(input)
+
+        for (line in lines) {
+            val (id: String, position: Pair<Int, Int>, size: Pair<Int, Int>) = parseLine(line)
+            if (findUniqueFabricIdSpace(size, position)) return id
+        }
+
+        throw NoSuchElementException("No ID was found that was not overlapping.")
+    }
+
+    private fun findUniqueFabricIdSpace(size: Pair<Int, Int>, position: Pair<Int, Int>): Boolean {
+        val desiredIdSquareInches = size.first * size.second
+        var currentIdSquareInches = 0
+        for (row in position.first..(position.first + size.first - 1)) {
+            for (column in position.second..(position.second + size.second - 1)) {
+                if (fabricCounts[row][column] == 1) currentIdSquareInches++
+                if (currentIdSquareInches == desiredIdSquareInches) return true
+            }
+        }
+        return false
     }
 }
 
