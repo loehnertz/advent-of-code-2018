@@ -1,7 +1,6 @@
 package solutions
 
 import org.junit.Test
-import solutions.Day02.calculateLetterOccurrenceScores
 import kotlin.test.assertEquals
 
 class Day02Test {
@@ -17,19 +16,19 @@ class Day02Test {
     fun `the letter occurrences for two and three occurrences is calculated correctly`() {
         val input1: HashMap<String, Int> = hashMapOf("a" to 2, "b" to 3, "c" to 1)
         val correctOutput1: Pair<Boolean, Boolean> = Pair(true, true)
-        assertEquals(correctOutput1, calculateLetterOccurrenceScores(input1))
+        assertEquals(correctOutput1, Day02.calculateLetterOccurrenceScores(input1))
 
         val input2: HashMap<String, Int> = hashMapOf("a" to 2, "b" to 2, "c" to 1)
         val correctOutput2: Pair<Boolean, Boolean> = Pair(true, false)
-        assertEquals(correctOutput2, calculateLetterOccurrenceScores(input2))
+        assertEquals(correctOutput2, Day02.calculateLetterOccurrenceScores(input2))
 
         val input3: HashMap<String, Int> = hashMapOf("a" to 1, "b" to 3, "c" to 1)
         val correctOutput3: Pair<Boolean, Boolean> = Pair(false, true)
-        assertEquals(correctOutput3, calculateLetterOccurrenceScores(input3))
+        assertEquals(correctOutput3, Day02.calculateLetterOccurrenceScores(input3))
 
         val input4: HashMap<String, Int> = hashMapOf("a" to 1, "b" to 1, "c" to 1)
         val correctOutput4: Pair<Boolean, Boolean> = Pair(false, false)
-        assertEquals(correctOutput4, calculateLetterOccurrenceScores(input4))
+        assertEquals(correctOutput4, Day02.calculateLetterOccurrenceScores(input4))
     }
 
     @Test
