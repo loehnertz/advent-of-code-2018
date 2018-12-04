@@ -28,4 +28,4 @@ the second puzzle is unlocked when you complete the first. Each puzzle grants on
 | Day 3: No Matter How You Slice It 	| ⭐      	| ⭐      	|
 
 ## Tests
-I additionally write tests for every day's puzzle. You can execute them with JUnit.
+I additionally wrote tests for every day's puzzle. You can execute them with JUnit.
