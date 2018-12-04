@@ -1,5 +1,17 @@
 package solutions
 
+import java.time.LocalDateTime
+
+enum class GuardAction {
+    BEGINS_SHIFT, FALLS_ASLEEP, WAKES_UP
+}
+
+data class GuardRecord(
+    val timestamp: LocalDateTime,
+    val id: Int,
+    val action: GuardAction
+)
+
 object Day04 : Solution() {
     override val identifier = this::class.simpleName.toString()
 
