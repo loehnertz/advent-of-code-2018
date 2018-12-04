@@ -27,7 +27,8 @@ object Day04 : Solution() {
     }
 
     fun parseTimestamp(timestampWithBrackets: String): LocalDateTime {
-        TODO("Implement this!")
+        val timestamp: String = timestampWithBrackets.replace("[", "").replace("]", "")
+        return LocalDateTime.parse(timestamp, DateTimeFormatter.ofPattern(RecordTimestampPattern))
     }
 
     override fun solvePart2(input: String): String {
