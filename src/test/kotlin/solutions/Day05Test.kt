@@ -43,4 +43,15 @@ class Day05Test {
 
         assertEquals(input, Day05.collapsePolymer(input))
     }
+
+    @Test
+    fun `the unit with the biggest impact when removed upon collapsing the polymer is correctly detected`() {
+        val rawInput = "dabAcCaCBAcCcaDA"
+        val input: ArrayList<String> = ArrayList(rawInput.split(""))
+        input.removeIf { it == "" }
+
+        val correctOutput = "c"
+
+        assertEquals(correctOutput, Day05.determineUnitWithBiggestCollapsingImpactUponRemovalFromPolymer(input))
+    }
 }

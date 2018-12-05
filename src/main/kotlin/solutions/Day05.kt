@@ -36,21 +36,26 @@ object Day05 : Solution() {
     override fun solvePart2(input: String): String {
         val initialPolymer: ArrayList<String> = ArrayList(input.split(""))
         initialPolymer.removeIf { it == "" }  // Kotlin adds two empty characters to front and back for some reason
-        val allUnitsInPolymer: List<String> = initialPolymer.map { it.toLowerCase() }.distinct()
+        val unitWithMostImpactOnCollapsing: String? =
+            determineUnitWithBiggestCollapsingImpactUponRemovalFromPolymer(initialPolymer)
+        val tempPolymer: ArrayList<String> = ArrayList(initialPolymer)
+        tempPolymer.removeIf { it.toLowerCase() == unitWithMostImpactOnCollapsing }
+
+        return collapsePolymer(tempPolymer).size.toString()
+    }
+
+    fun determineUnitWithBiggestCollapsingImpactUponRemovalFromPolymer(polymer: ArrayList<String>): String? {
+        val allUnitsInPolymer: List<String> = polymer.map { it.toLowerCase() }.distinct()
         val allUnitsInPolymerWithImpactOnCollapsing: ArrayList<Pair<String, Int>> = ArrayList()
 
         for (unit: String in allUnitsInPolymer) {
-            val tempPolymer: ArrayList<String> = ArrayList(initialPolymer)
+            val tempPolymer: ArrayList<String> = ArrayList(polymer)
             tempPolymer.removeIf { it.toLowerCase() == unit }
             val polymerSizeAfterCollapsing: Int = collapsePolymer(tempPolymer).size
             allUnitsInPolymerWithImpactOnCollapsing.add(Pair(unit, polymerSizeAfterCollapsing))
         }
 
-        val unitWithMostImpactOnCollapsing: String? = allUnitsInPolymerWithImpactOnCollapsing.minBy { it.second }?.first
-        val tempPolymer: ArrayList<String> = ArrayList(initialPolymer)
-        tempPolymer.removeIf { it.toLowerCase() == unitWithMostImpactOnCollapsing }
-
-        return collapsePolymer(tempPolymer).size.toString()
+        return allUnitsInPolymerWithImpactOnCollapsing.minBy { it.second }?.first
     }
 }
 
