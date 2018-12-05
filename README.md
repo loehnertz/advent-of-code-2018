@@ -7,7 +7,7 @@ It is like an advent calendar with small chocolates but replaced with small, chr
 one for each day until christmas. They typically get more difficult with each day.
 You can solve them in any language you like.
 
-## Advent of Code 2018 – Story
+## Advent of Code 2018 – Plot
 "We've detected some temporal anomalies," one of Santa's Elves at the Temporal Anomaly Research and Detection Instrument
 Station tells you. She sounded pretty worried when she called you down here. "At 500-year intervals into the past,
 someone has been changing Santa's history!"
@@ -26,6 +26,7 @@ the second puzzle is unlocked when you complete the first. Each puzzle grants on
 | Day 1: Chronal Calibration 	        | ⭐      	| ⭐      	|
 | Day 2: Inventory Management System 	| ⭐      	| ⭐      	|
 | Day 3: No Matter How You Slice It 	| ⭐      	| ⭐      	|
+| Day 4: Repose Record 	                | ⭐      	| ⭐      	|
 
 ## Tests
 I additionally wrote tests for every day's puzzle. You can execute them with JUnit.
