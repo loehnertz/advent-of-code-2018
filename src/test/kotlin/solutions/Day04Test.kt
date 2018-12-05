@@ -3,16 +3,14 @@ package solutions
 import org.junit.Test
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.IllegalFormatException
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class Day04Test {
     private val dateFormatPattern: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
     @Test
     fun `part 1 returns a correct result`() {
-        val input = "[1518-11-01 00:00] Guard #10 begins shift\n" +
+        val input: String = "[1518-11-01 00:00] Guard #10 begins shift\n" +
                 "[1518-11-01 00:05] falls asleep\n" +
                 "[1518-11-01 00:25] wakes up\n" +
                 "[1518-11-01 00:30] falls asleep\n" +
@@ -29,7 +27,7 @@ class Day04Test {
                 "[1518-11-05 00:03] Guard #99 begins shift\n" +
                 "[1518-11-05 00:45] falls asleep\n" +
                 "[1518-11-05 00:55] wakes up"
-        val correctOutput = "24"
+        val correctOutput = "240"
 
         assertEquals(correctOutput, Day04.solvePart1(input))
     }
@@ -96,15 +94,36 @@ class Day04Test {
     }
 
     @Test
-    fun `it is correctly determined which guard slept the most and in which minute`() {
-        val timeArrayGuard1: Array<Int> = Array(60) { 0 }
-        timeArrayGuard1[24] = 2
-        val timeArrayGuard2: Array<Int> = Array(60) { 0 }
-        timeArrayGuard2[12] = 1
+    fun `it is correctly calculated which guard slept the most and in which minute`() {
+        val asleepTime1Guard1 = GuardAsleepTime(
+            fellAsleepAt = LocalDateTime.parse("1518-11-01 00:25", dateFormatPattern),
+            wokeUpAt = LocalDateTime.parse("1518-11-01 00:59", dateFormatPattern)
+        )
+        val asleepTime2Guard1 = GuardAsleepTime(
+            fellAsleepAt = LocalDateTime.parse("1518-11-01 00:25", dateFormatPattern),
+            wokeUpAt = LocalDateTime.parse("1518-11-01 00:26", dateFormatPattern)
+        )
+        val asleepTime1Guard2 = GuardAsleepTime(
+            fellAsleepAt = LocalDateTime.parse("1518-11-02 00:01", dateFormatPattern),
+            wokeUpAt = LocalDateTime.parse("1518-11-02 00:05", dateFormatPattern)
+        )
+        val asleepTime2Guard2 = GuardAsleepTime(
+            fellAsleepAt = LocalDateTime.parse("1518-11-01 00:25", dateFormatPattern),
+            wokeUpAt = LocalDateTime.parse("1518-11-01 00:30", dateFormatPattern)
+        )
 
-        val input: HashMap<Int, Array<Int>> = hashMapOf(1 to timeArrayGuard1, 2 to timeArrayGuard2)
-        val correctOutput: Pair<Int, Int> = Pair(10, 19)
+        val input: HashMap<Int, ArrayList<GuardAsleepTime>> = hashMapOf(
+            1 to arrayListOf(asleepTime1Guard1, asleepTime2Guard1),
+            2 to arrayListOf(asleepTime1Guard2, asleepTime2Guard2)
+        )
 
-        assertEquals(correctOutput, Day04.calculateGuardWithMostTimeAsleep(input))
+        val correctOutputGuardId = 1
+        val correctOutputMinute = 25
+
+        val outputGuardId = Day04.calculateGuardWithMostTimeAsleep(input)
+        val outputMinute = Day04.determineMinuteWhichGuardIsAsleepTheMost(input[outputGuardId]!!)
+
+        assertEquals(correctOutputGuardId, outputGuardId)
+        assertEquals(correctOutputMinute, outputMinute)
     }
 }
