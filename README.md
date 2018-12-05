@@ -27,6 +27,7 @@ the second puzzle is unlocked when you complete the first. Each puzzle grants on
 | Day 2: Inventory Management System 	| ⭐      	| ⭐      	|
 | Day 3: No Matter How You Slice It 	| ⭐      	| ⭐      	|
 | Day 4: Repose Record 	                | ⭐      	| ⭐      	|
+| Day 4: Alchemical Reduction 	        | ⭐      	| ⭐      	|
 
 ## Tests
 I additionally wrote tests for every day's puzzle. You can execute them with JUnit.
