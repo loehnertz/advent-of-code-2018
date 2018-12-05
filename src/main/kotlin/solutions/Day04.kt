@@ -151,7 +151,45 @@ object Day04 : Solution() {
     }
 
     override fun solvePart2(input: String): String {
-        TODO("Implement this!")
+        val lines: List<String> = splitMultilineInput(input)
+        val recordEntries: ArrayList<Pair<LocalDateTime, String>> = orderRecordEntries(lines)
+        val guardRecords: ArrayList<GuardRecord> = parseRecordEntries(recordEntries)
+        val guardsAsleepTimes: HashMap<Int, ArrayList<GuardAsleepTime>> = accumulateGuardsAsleepTimes(guardRecords)
+        val guardSleepDurationTimes: HashMap<Int, Array<Int>> = buildGuardSleepDurationTimes(guardsAsleepTimes)
+        val guardAndMinuteTheyAreMostAsleepIn =
+            determineGuardWhichIsAsleepTheMostInAParticularMinute(guardSleepDurationTimes)
+
+        return (guardAndMinuteTheyAreMostAsleepIn.first * guardAndMinuteTheyAreMostAsleepIn.second).toString()
+    }
+
+    fun determineGuardWhichIsAsleepTheMostInAParticularMinute(guardSleepDurationTimes: HashMap<Int, Array<Int>>): Pair<Int, Int> {
+        val guardThatSleepsTheMostInParticularMinute: Pair<Int, Int> = guardSleepDurationTimes.asSequence()
+            .map { (key: Int, value: Array<Int>) -> key to value.max()!! }
+            .maxBy { it.second }!!
+
+        val minuteThatGuardIsAsleepTheMostIn: Int = guardSleepDurationTimes.asSequence()
+            .find { (key: Int, _) -> key == guardThatSleepsTheMostInParticularMinute.first }!!
+            .value
+            .indexOf(guardThatSleepsTheMostInParticularMinute.second)
+
+        return Pair(guardThatSleepsTheMostInParticularMinute.first, minuteThatGuardIsAsleepTheMostIn)
+    }
+
+    fun buildGuardSleepDurationTimes(guardsAsleepTimes: HashMap<Int, ArrayList<GuardAsleepTime>>): HashMap<Int, Array<Int>> {
+        val guardSleepDurationTimes: HashMap<Int, Array<Int>> = HashMap()
+
+        for (guard: MutableMap.MutableEntry<Int, ArrayList<GuardAsleepTime>> in guardsAsleepTimes) {
+            val guardId = guard.key
+            for (asleepTime: GuardAsleepTime in guard.value) {
+                // Initialize the array of each guard which each minute
+                if (!guardSleepDurationTimes.containsKey(guardId)) guardSleepDurationTimes[guardId] = Array(60) { 0 }
+                for (minute: Int in asleepTime.fellAsleepAt.minute..(asleepTime.wokeUpAt.minute - 1)) {
+                    guardSleepDurationTimes[guardId]!![minute]++
+                }
+            }
+        }
+
+        return guardSleepDurationTimes
     }
 }
 
