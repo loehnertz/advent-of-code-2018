@@ -2,6 +2,7 @@ package solutions
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 const val RecordTimestampPattern = "yyyy-MM-dd HH:mm"
 const val GuardIdRegex = "#[0-9]*"
@@ -14,9 +15,14 @@ enum class GuardAction {
 }
 
 data class GuardRecord(
-    val timestamp: LocalDateTime,
     val id: Int,
+    val timestamp: LocalDateTime,
     val action: GuardAction
+)
+
+data class GuardAsleepTime(
+    val fellAsleepAt: LocalDateTime,
+    val wokeUpAt: LocalDateTime
 )
 
 object Day04 : Solution() {
@@ -26,12 +32,66 @@ object Day04 : Solution() {
         val lines: List<String> = splitMultilineInput(input)
         val recordEntries: ArrayList<Pair<LocalDateTime, String>> = orderRecordEntries(lines)
         val guardRecords: ArrayList<GuardRecord> = parseRecordEntries(recordEntries)
+        val guardsAsleepTimes: HashMap<Int, ArrayList<GuardAsleepTime>> = accumulateGuardsAsleepTimes(guardRecords)
+        val guardThatIsAsleepTheMost: Int = calculateGuardWithMostTimeAsleep(guardsAsleepTimes)
+        val minuteGuardIsAsleepTheMost: Int =
+            determineMinuteWhichGuardIsAsleepTheMost(guardsAsleepTimes[guardThatIsAsleepTheMost]!!)
 
-        return ""
+        return (guardThatIsAsleepTheMost * minuteGuardIsAsleepTheMost).toString()
     }
 
-    fun calculateGuardWithMostTimeAsleep(guardAsleepTimes: HashMap<Int, Array<Int>>): Pair<Int, Int> {
-        TODO("Implement this!")
+    fun determineMinuteWhichGuardIsAsleepTheMost(guardsAsleepTimes: ArrayList<GuardAsleepTime>): Int {
+        val minuteArray: Array<Int> = buildAsleepMinuteArray(guardsAsleepTimes)
+        val mostAsleepCount: Int? = minuteArray.max()
+        return minuteArray.indexOf(mostAsleepCount)
+    }
+
+    fun buildAsleepMinuteArray(guardsAsleepTimes: ArrayList<GuardAsleepTime>): Array<Int> {
+        val minuteArray: Array<Int> = Array(60) { 0 }
+
+        for (asleepTime: GuardAsleepTime in guardsAsleepTimes) {
+            for (minute: Int in asleepTime.fellAsleepAt.minute..(asleepTime.wokeUpAt.minute - 1)) {
+                minuteArray[minute]++
+            }
+        }
+
+        return minuteArray
+    }
+
+    fun calculateGuardWithMostTimeAsleep(guardsAsleepTimes: HashMap<Int, ArrayList<GuardAsleepTime>>): Int {
+        val guardsTotalAsleepTimes: HashMap<Int, Long> = HashMap()
+
+        for (asleepTime: MutableMap.MutableEntry<Int, ArrayList<GuardAsleepTime>> in guardsAsleepTimes) {
+            val totalTimeAsleep: Long =
+                asleepTime.value
+                    .asSequence()
+                    .map { it.fellAsleepAt.until(it.wokeUpAt, ChronoUnit.MINUTES) }
+                    .sum()
+
+            guardsTotalAsleepTimes[asleepTime.key] = (guardsTotalAsleepTimes[asleepTime.key] ?: 0) + totalTimeAsleep
+        }
+
+        return guardsTotalAsleepTimes.maxBy { it.value }!!.key
+    }
+
+    fun accumulateGuardsAsleepTimes(guardRecords: ArrayList<GuardRecord>): HashMap<Int, ArrayList<GuardAsleepTime>> {
+        val guardsAsleepTimes: HashMap<Int, ArrayList<GuardAsleepTime>> = HashMap()
+        var fellAsleepAt: LocalDateTime = LocalDateTime.MIN
+
+        for (record: GuardRecord in guardRecords) {
+            when {
+                record.action == GuardAction.FALLS_ASLEEP -> {
+                    fellAsleepAt = record.timestamp
+                }
+                record.action == GuardAction.WAKES_UP -> {
+                    val wokeUpAt: LocalDateTime = record.timestamp
+                    if (!guardsAsleepTimes.containsKey(record.id)) guardsAsleepTimes[record.id] = ArrayList()
+                    guardsAsleepTimes[record.id]?.add(GuardAsleepTime(fellAsleepAt, wokeUpAt))
+                }
+            }
+        }
+
+        return guardsAsleepTimes
     }
 
     fun parseRecordEntries(recordEntries: ArrayList<Pair<LocalDateTime, String>>): ArrayList<GuardRecord> {
