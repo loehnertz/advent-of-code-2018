@@ -107,16 +107,4 @@ class Day04Test {
 
         assertEquals(correctOutput, Day04.calculateGuardWithMostTimeAsleep(input))
     }
-
-    @Test
-    fun `a guard time array of a smaller or larger size than 60 throws an exception`() {
-        val timeArrayGuard1: Array<Int> = Array(59) { 0 }
-        val timeArrayGuard2: Array<Int> = Array(61) { 0 }
-
-        val input1: HashMap<Int, Array<Int>> = hashMapOf(1 to timeArrayGuard1)
-        val input2: HashMap<Int, Array<Int>> = hashMapOf(2 to timeArrayGuard2)
-
-        assertFailsWith(IllegalFormatException::class) { Day04.calculateGuardWithMostTimeAsleep(input1) }
-        assertFailsWith(IllegalFormatException::class) { Day04.calculateGuardWithMostTimeAsleep(input2) }
-    }
 }
