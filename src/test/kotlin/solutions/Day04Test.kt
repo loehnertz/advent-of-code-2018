@@ -43,7 +43,7 @@ class Day04Test {
     fun `the record lines get correctly chronologically ordered`() {
         val rawInput: String = "[1518-11-01 23:58] Guard #99 begins shift\n" +
                 "[1518-11-02 00:40] falls asleep\n" +
-                "[1518-11-01 00:00] Guard #10 begins shift\n"
+                "[1518-11-01 00:00] Guard #10 begins shift"
         val input: List<String> = rawInput.split("\n")
 
         val timestamp1: LocalDateTime = LocalDateTime.parse("1518-11-01 00:00", dateFormatPattern)
