@@ -7,15 +7,12 @@ object Day05 : Solution() {
 
     override fun solvePart1(input: String): String {
         val initialPolymer: ArrayList<String> = ArrayList(input.split(""))
+        initialPolymer.removeIf { it == "" }
         return collapsePolymer(initialPolymer).size.toString()
     }
 
     fun collapsePolymer(initialPolymer: ArrayList<String>): ArrayList<String> {
-        // Mark the first and last character to start the while-loop as it is an empty character anyway
-        initialPolymer[0] = deleteChar
-        initialPolymer[initialPolymer.size - 1] = deleteChar
-
-        while (initialPolymer.indexOf(deleteChar) != -1) {
+        do {
             // Remove all characters that were marked in the last iteration
             initialPolymer.removeIf { it == deleteChar }
 
@@ -31,13 +28,29 @@ object Day05 : Solution() {
                     }
                 }
             }
-        }
+        } while (initialPolymer.indexOf(deleteChar) != -1)
 
         return initialPolymer
     }
 
     override fun solvePart2(input: String): String {
-        TODO("Implement this!")
+        val initialPolymer: ArrayList<String> = ArrayList(input.split(""))
+        initialPolymer.removeIf { it == "" }
+        val allUnitsInPolymer: List<String> = initialPolymer.map { it.toLowerCase() }.distinct()
+        val allUnitsInPolymerWithImpactOnCollapsing: ArrayList<Pair<String, Int>> = ArrayList()
+
+        for (unit: String in allUnitsInPolymer) {
+            val tempPolymer: ArrayList<String> = ArrayList(initialPolymer)
+            tempPolymer.removeIf { it.toLowerCase() == unit }
+            val polymerSizeAfterCollapsing: Int = collapsePolymer(tempPolymer).size
+            allUnitsInPolymerWithImpactOnCollapsing.add(Pair(unit, polymerSizeAfterCollapsing))
+        }
+
+        val unitWithMostImpactOnCollapsing: String? = allUnitsInPolymerWithImpactOnCollapsing.minBy { it.second }?.first
+        val tempPolymer: ArrayList<String> = ArrayList(initialPolymer)
+        tempPolymer.removeIf { it.toLowerCase() == unitWithMostImpactOnCollapsing }
+
+        return collapsePolymer(tempPolymer).size.toString()
     }
 }
 
