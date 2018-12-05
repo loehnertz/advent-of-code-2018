@@ -7,7 +7,7 @@ object Day05 : Solution() {
 
     override fun solvePart1(input: String): String {
         val initialPolymer: ArrayList<String> = ArrayList(input.split(""))
-        initialPolymer.removeIf { it == "" }
+        initialPolymer.removeIf { it == "" }  // Kotlin adds two empty characters to front and back for some reason
         return collapsePolymer(initialPolymer).size.toString()
     }
 
@@ -35,7 +35,7 @@ object Day05 : Solution() {
 
     override fun solvePart2(input: String): String {
         val initialPolymer: ArrayList<String> = ArrayList(input.split(""))
-        initialPolymer.removeIf { it == "" }
+        initialPolymer.removeIf { it == "" }  // Kotlin adds two empty characters to front and back for some reason
         val allUnitsInPolymer: List<String> = initialPolymer.map { it.toLowerCase() }.distinct()
         val allUnitsInPolymerWithImpactOnCollapsing: ArrayList<Pair<String, Int>> = ArrayList()
 
